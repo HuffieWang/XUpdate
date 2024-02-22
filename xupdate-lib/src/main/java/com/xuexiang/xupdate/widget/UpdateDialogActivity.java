@@ -42,6 +42,8 @@ import static com.xuexiang.xupdate.widget.UpdateDialogFragment.KEY_UPDATE_ENTITY
 import static com.xuexiang.xupdate.widget.UpdateDialogFragment.KEY_UPDATE_PROMPT_ENTITY;
 import static com.xuexiang.xupdate.widget.UpdateDialogFragment.REQUEST_CODE_REQUEST_PERMISSIONS;
 
+import com.xuexiang.xupdate.widget.UpdateDialog;
+
 /**
  * 版本更新提示器【AppCompatActivity实现】
  *
@@ -201,8 +203,12 @@ public class UpdateDialogActivity extends AppCompatActivity implements View.OnCl
         String updateInfo = UpdateUtils.getDisplayUpdateInfo(this, updateEntity);
         // 更新内容
         mTvUpdateInfo.setText(updateInfo);
-        mTvTitle.setText(String.format(getString(R.string.xupdate_lab_ready_update), newVersion));
-
+    
+        if(UpdateDialog.sTitleTextId != 0){
+            mTvTitle.setText(String.format(getString(UpdateDialog.sTitleTextId), newVersion));
+        } else {
+            mTvTitle.setText(String.format(getString(R.string.xupdate_lab_ready_update), newVersion));
+        }
         // 刷新升级按钮显示
         refreshUpdateButton();
 
@@ -425,7 +431,11 @@ public class UpdateDialogActivity extends AppCompatActivity implements View.OnCl
     private void showInstallButton() {
         mNumberProgressBar.setVisibility(View.GONE);
         mBtnBackgroundUpdate.setVisibility(View.GONE);
-        mBtnUpdate.setText(R.string.xupdate_lab_install);
+        if(UpdateDialog.sInstallButtonTextId != 0){
+            mBtnUpdate.setText(UpdateDialog.sInstallButtonTextId);
+        } else {
+            mBtnUpdate.setText(R.string.xupdate_lab_install);
+        }
         mBtnUpdate.setVisibility(View.VISIBLE);
         mBtnUpdate.setOnClickListener(this);
     }
@@ -436,7 +446,11 @@ public class UpdateDialogActivity extends AppCompatActivity implements View.OnCl
     private void showUpdateButton() {
         mNumberProgressBar.setVisibility(View.GONE);
         mBtnBackgroundUpdate.setVisibility(View.GONE);
-        mBtnUpdate.setText(R.string.xupdate_lab_update);
+        if(UpdateDialog.sUpdateButtonTextId != 0){
+            mBtnUpdate.setText(UpdateDialog.sUpdateButtonTextId);
+        } else {
+            mBtnUpdate.setText(R.string.xupdate_lab_update);
+        }
         mBtnUpdate.setVisibility(View.VISIBLE);
         mBtnUpdate.setOnClickListener(this);
     }

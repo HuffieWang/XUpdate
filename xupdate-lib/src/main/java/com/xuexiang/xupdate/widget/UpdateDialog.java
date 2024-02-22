@@ -108,6 +108,10 @@ public class UpdateDialog extends BaseDialog implements View.OnClickListener, ID
      */
     private PromptEntity mPromptEntity;
 
+    public static int sTitleTextId;
+    public static int sInstallButtonTextId;
+    public static int sUpdateButtonTextId;
+    
     /**
      * 获取更新提示
      *
@@ -213,8 +217,11 @@ public class UpdateDialog extends BaseDialog implements View.OnClickListener, ID
         String updateInfo = UpdateUtils.getDisplayUpdateInfo(getContext(), updateEntity);
         // 更新内容
         mTvUpdateInfo.setText(updateInfo);
-        mTvTitle.setText(String.format(getString(R.string.xupdate_lab_ready_update), newVersion));
-
+        if(sTitleTextId != 0){
+            mTvTitle.setText(String.format(getString(sTitleTextId), newVersion));
+        } else {
+            mTvTitle.setText(String.format(getString(R.string.xupdate_lab_ready_update), newVersion));
+        }
         // 刷新升级按钮显示
         refreshUpdateButton();
 
@@ -409,7 +416,11 @@ public class UpdateDialog extends BaseDialog implements View.OnClickListener, ID
     private void showInstallButton() {
         mNumberProgressBar.setVisibility(View.GONE);
         mBtnBackgroundUpdate.setVisibility(View.GONE);
-        mBtnUpdate.setText(R.string.xupdate_lab_install);
+        if(sInstallButtonTextId != 0){
+            mBtnUpdate.setText(sInstallButtonTextId);
+        } else {
+            mBtnUpdate.setText(R.string.xupdate_lab_install);
+        }
         mBtnUpdate.setVisibility(View.VISIBLE);
         mBtnUpdate.setOnClickListener(this);
     }
@@ -420,7 +431,11 @@ public class UpdateDialog extends BaseDialog implements View.OnClickListener, ID
     private void showUpdateButton() {
         mNumberProgressBar.setVisibility(View.GONE);
         mBtnBackgroundUpdate.setVisibility(View.GONE);
-        mBtnUpdate.setText(R.string.xupdate_lab_update);
+        if(sUpdateButtonTextId != 0){
+            mBtnUpdate.setText(sUpdateButtonTextId);
+        } else {
+            mBtnUpdate.setText(R.string.xupdate_lab_update);
+        }
         mBtnUpdate.setVisibility(View.VISIBLE);
         mBtnUpdate.setOnClickListener(this);
     }
